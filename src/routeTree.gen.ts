@@ -11,7 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PrescriptionsRouteImport } from './routes/prescriptions'
 import { Route as PatientsRouteImport } from './routes/patients'
+import { Route as OrdersRouteImport } from './routes/orders'
 import { Route as InventoryRouteImport } from './routes/inventory'
+import { Route as AlertsRouteImport } from './routes/alerts'
 import { Route as IndexRouteImport } from './routes/index'
 
 const PrescriptionsRoute = PrescriptionsRouteImport.update({
@@ -24,9 +26,19 @@ const PatientsRoute = PatientsRouteImport.update({
   path: '/patients',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OrdersRoute = OrdersRouteImport.update({
+  id: '/orders',
+  path: '/orders',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const InventoryRoute = InventoryRouteImport.update({
   id: '/inventory',
   path: '/inventory',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AlertsRoute = AlertsRouteImport.update({
+  id: '/alerts',
+  path: '/alerts',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -37,34 +49,61 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/alerts': typeof AlertsRoute
   '/inventory': typeof InventoryRoute
+  '/orders': typeof OrdersRoute
   '/patients': typeof PatientsRoute
   '/prescriptions': typeof PrescriptionsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/alerts': typeof AlertsRoute
   '/inventory': typeof InventoryRoute
+  '/orders': typeof OrdersRoute
   '/patients': typeof PatientsRoute
   '/prescriptions': typeof PrescriptionsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/alerts': typeof AlertsRoute
   '/inventory': typeof InventoryRoute
+  '/orders': typeof OrdersRoute
   '/patients': typeof PatientsRoute
   '/prescriptions': typeof PrescriptionsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/inventory' | '/patients' | '/prescriptions'
+  fullPaths:
+    | '/'
+    | '/alerts'
+    | '/inventory'
+    | '/orders'
+    | '/patients'
+    | '/prescriptions'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/inventory' | '/patients' | '/prescriptions'
-  id: '__root__' | '/' | '/inventory' | '/patients' | '/prescriptions'
+  to:
+    | '/'
+    | '/alerts'
+    | '/inventory'
+    | '/orders'
+    | '/patients'
+    | '/prescriptions'
+  id:
+    | '__root__'
+    | '/'
+    | '/alerts'
+    | '/inventory'
+    | '/orders'
+    | '/patients'
+    | '/prescriptions'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AlertsRoute: typeof AlertsRoute
   InventoryRoute: typeof InventoryRoute
+  OrdersRoute: typeof OrdersRoute
   PatientsRoute: typeof PatientsRoute
   PrescriptionsRoute: typeof PrescriptionsRoute
 }
@@ -85,11 +124,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PatientsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/orders': {
+      id: '/orders'
+      path: '/orders'
+      fullPath: '/orders'
+      preLoaderRoute: typeof OrdersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/inventory': {
       id: '/inventory'
       path: '/inventory'
       fullPath: '/inventory'
       preLoaderRoute: typeof InventoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/alerts': {
+      id: '/alerts'
+      path: '/alerts'
+      fullPath: '/alerts'
+      preLoaderRoute: typeof AlertsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -104,7 +157,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AlertsRoute: AlertsRoute,
   InventoryRoute: InventoryRoute,
+  OrdersRoute: OrdersRoute,
   PatientsRoute: PatientsRoute,
   PrescriptionsRoute: PrescriptionsRoute,
 }
